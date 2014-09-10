@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+		
+	<bean id="daoFactoryUtil"
+		class="com.virtusa.mwallet.business.util.DAOFactoryUtil" >
+	</bean>
+	
+	<bean id="statusBean"
+		class="com.virtusa.mwallet.valueobjects.Status" >
+	</bean>
+	
+	<bean id="userBean"
+		class="com.virtusa.mwallet.valueobjects.User" >
+	</bean>
+    
+    <bean id="profileComponentBean"
+		class="com.virtusa.mwallet.business.components.impl.ProfileComponent" >
+	</bean>
+    
+	<bean id="profileFactory"
+		class="com.virtusa.mwallet.business.factories.ProfileFactory" >
+		<property name="profileComponent"><ref bean = "profileComponentBean" /></property>
+	</bean>
+	
+	<bean id="userDAOComponentBean"
+		class="com.virtusa.mwallet.persistence.component.impl.UserDAO" >
+	</bean>
+	
+	<bean id="userDAOFactory" 
+		class="com.virtusa.mwallet.persistence.factories.UserDAOFactory" >
+		<property name="userDAOComponent" ref = "userDAOComponentBean" />
+	</bean>
+	
+	 <bean id="paymentComponentBean"
+		class="com.virtusa.mwallet.business.components.impl.PaymentComponent" >
+	</bean>
+    
+	<bean id="paymentFactory"
+		class="com.virtusa.mwallet.business.factories.PaymentFactory" >
+		<property name="paymentComponent"><ref bean = "paymentComponentBean" /></property>
+	</bean>
+	
+	<bean id="transactionComponentBean"
+		class="com.virtusa.mwallet.business.components.impl.TransactionComponent" >
+	</bean>
+    
+	<bean id="transactionFactory"
+		class="com.virtusa.mwallet.business.factories.TransactionFactory" >
+		<property name="transactionComponent"><ref bean = "transactionComponentBean" /></property>
+	</bean>
+	
+	<bean id="walletDAOComponentBean"
+		class="com.virtusa.mwallet.persistence.component.impl.WalletDAO" >
+	</bean>
+	
+	<bean id="walletDAOFactory" 
+		class="com.virtusa.mwallet.persistence.factories.WalletDAOFactory" >
+		<property name="walletDAOComponent" ref = "walletDAOComponentBean" />
+	</bean>
+	
+	 <bean id="toppingComponentBean"
+		class="com.virtusa.mwallet.business.components.impl.ToppingComponent" >
+	</bean>
+    
+	<bean id="toppingFactory"
+		class="com.virtusa.mwallet.business.factories.ToppingFactory" >
+		<property name="toppingComponent"><ref bean = "toppingComponentBean" /></property>
+	</bean>
+	
+	<bean id="tempTransactionDAOComponentBean"
+		class="com.virtusa.mwallet.persistence.component.impl.TempTransactionDAO" >
+	</bean>
+	
+	<bean id="tempTransactionDAOFactory" 
+		class="com.virtusa.mwallet.persistence.factories.TempTransactionDAOFactory" >
+		<property name="tempTransactionDAOComponent" ref = "tempTransactionDAOComponentBean" />
+	</bean>
+	 
+</beans>

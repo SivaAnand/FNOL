@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+    
+<class name="com.virtusa.mwallet.valueobjects.User" table="USER">
+<id name="userId" type="java.lang.String" column="USERID" />
+<property name="MMID" type="java.lang.String" column="MMID"/>
+<property name="mobileNo" type="java.lang.String" column="MOBILENO"/>
+<property name="userName" type="java.lang.String" column="USERNAME"/>
+<property name="pin" type="java.lang.String" column="PIN"/>
+</class>
+
+
+<class name="com.virtusa.mwallet.valueobjects.Wallet" table="WALLET">
+ 	<composite-id name="walletPK" class="com.virtusa.mwallet.valueobjects.WalletPK" >        	
+       	<key-property name="eWalletID" type="java.lang.String" column="EWALLETID"/>
+       	<key-property name="MMID" type="java.lang.String" column="MMID"/>        	
+    </composite-id>    
+<property name="iPIN" type="java.lang.String" column="IPIN"/>
+<property name="balance" type="java.lang.Float" column="BALANCE"/>
+<property name="rechargeFrequency" type="java.lang.Integer" column="RECHARGEFREQUENCY"/>
+</class>
+
+<class name="com.virtusa.mwallet.valueobjects.Bank" table="BANK">
+<id name="MMID" type="java.lang.String" column="MMID"/>
+<property name="bankName" type="java.lang.String" column="BANKNAME"/>
+</class>
+
+<!--  
+<class name="com.virtusa.mwallet.valueobjects.ETransactions" table="ETRANSACTIONS">
+<id name="transactionID" type="java.lang.Long" column="TRANSACTIONID">
+<generator class="increment"/>
+</id>
+<property name="MMIDPayee" type="java.lang.String" column="MMIDPAYEE"/>
+<property name="eWalletIDPayee" type="java.lang.String" column="EWALLETIDPAYEE"/>
+<property name="MMIDRecipient" type="java.lang.String" column="MMIDRECIPIENT"/>
+<property name="eWalletIDRecipient" type="java.lang.String" column="EWALLETIDRECIPIENT"/>
+<property name="amount" type="java.lang.Float" column="AMOUNT"/>
+<property name="date" type="java.sql.Date" column="DATE"/>
+<property name="type" type="java.lang.String" column="TYPE"/>
+<property name="description" type="java.lang.String" column="DESCRIPTION"/>
+</class>
+
+
+<class name="com.virtusa.mwallet.valueobjects.ETransaction" table="ETRANSACTION">
+<id name="transactionID" type="java.lang.Long" column="TRANSACTIONID">
+<generator class="increment"/>
+</id>
+<property name="amount" type="java.lang.Float" column="AMOUNT"/>
+<property name="date" type="java.sql.Date" column="DATE"/>
+<set name="transactionDetails" table="TRANSACTIONDETAILS" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="transactionID" not-null="true" />
+            </key>
+            <one-to-many class="com.virtusa.mwallet.valueobjects.TransactionDetails" />
+        </set>
+</class>
+
+<class name="com.virtusa.mwallet.valueobjects.TransactionDetails" table="TRANSACTIONDETAILS">
+<id name="SNO" type="java.lang.Long" column="SNO">
+<generator class="increment"/>
+</id>
+<property name="MMID" type="java.lang.String" column="MMID"/>
+<property name="eWalletID" type="java.lang.String" column="EWALLETID"/>
+<property name="type" type="java.lang.String" column="TYPE"/>
+<property name="description" type="java.lang.String" column="DESCRIPTION"/>
+<many-to-one name="eTransaction" class="com.virtusa.mwallet.valueobjects.ETransaction" fetch="select">
+            <column name="TRANSACTIONID" not-null="true" />
+        </many-to-one>
+</class>
+-->
+
+<class name="com.virtusa.mwallet.valueobjects.ETransaction" table="ETransaction">
+        <meta attribute="class-description">This class contains student details.</meta>
+        <id name="transactionId" type="long" column="transactionId" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="amount" type="float" not-null="true" column="amount" />
+        <property name="date" type="java.util.Date" not-null="true" column="Date" />
+       
+ 
+        <set name="transactionDetails" table="TRANS_DETAIL" cascade="all">
+			<key column="transactionId" />
+			<many-to-many column="transactionDetailsID" unique="true" class="com.virtusa.mwallet.valueobjects.TransactionDetails" />
+		</set>
+</class>
+
+
+<class name="com.virtusa.mwallet.valueobjects.TransactionDetails" table="TransactionDetails">
+		<meta attribute="class-description">This class contains student's phone number
+			details.</meta>
+		<id name="transactionDetailsId" type="long" column="TRANSACTIONDETAILS_ID" unsaved-value="0" >
+			<generator class="native" />
+		</id>
+		<property name="MMID" type="string"  column="MMID" length= "8"/>
+		<property name="eWalletID" type="string"  column="eWalletID" length= "10"/>
+		<property name="type" type="string"  column="type" length= "10"/>
+		<property name="description" type="string"  column="description" length= "525"/>
+
+</class>
+
+<class name="com.virtusa.mwallet.valueobjects.TempTransaction" table="TEMPTRANSACTION">
+<id name="tempTransactionID" type="long" column="TEMPTRANSACTIONID">
+<generator class="increment"/>
+</id>
+<property name="payerMMID" type="java.lang.String" column="MMIDPAYEE"/>
+<property name="payerEWalletID" type="java.lang.String" column="EWALLETIDPAYEE"/>
+<property name="receiverMMID" type="java.lang.String" column="MMIDRECIPIENT"/>
+<property name="receiverEWalletID" type="java.lang.String" column="EWALLETIDRECIPIENT"/>
+<property name="amount" type="java.lang.Float" column="AMOUNT"/>
+<property name="date" type="java.util.Date" column="DATE"/>
+<property name="IMEI" type="long" column="IMEI"/>
+<property name="approvalCode" type="java.lang.Integer" column="APPROVALCODE"/>
+</class>
+
+
+
+
+
+
+</hibernate-mapping>
